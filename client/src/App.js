@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getTransactions } from './redux/actions';
+import { getTransactions, getAccountDetails } from './redux/actions';
 import { TransactionItem } from './components/TransactionItem'
 import { Card } from './components/Card'
 import './App.css';
-import { selectAllTransactions, selectAllOutgoingTransactions, selectAllInboundTransactions, selectAccountIdFromTransactions } from './redux/selectors';
+import { selectAllTransactions, selectAllOutgoingTransactions, selectAllInboundTransactions, selectAccountUid } from './redux/selectors';
 
 
 class App extends Component {
@@ -13,8 +13,9 @@ class App extends Component {
     post: '',
     responseToPost: '',
   };
+
   componentDidMount() {
-    this.props.getTransactions()
+    this.props.getAccountDetails()
   }
 
 
@@ -38,23 +39,11 @@ class App extends Component {
   }
 
 render() {
-  console.log("outbound transaction amount", this.props.outboundTransactions)
     return (
       <div className="App">
         <header className="App-header">
         <p>{this.props.inboundTransactions.map(transaction => <p>{transaction.amount}</p>)}</p>
         <TransactionItem/>
-        <form onSubmit={this.handleSubmit}>
-          <p>
-            <strong>Post to Server:</strong>
-          </p>
-          <input
-            type="text"
-            value={this.state.post}
-            onChange={e => this.setState({ post: e.target.value })}
-            />
-          <button type="submit">Submit</button>
-        </form>
         </header>
         <h3>Your total round up for this month</h3>
         <p>{this.displayRoundUp(this.props.outboundTransactions)}</p>
@@ -64,13 +53,15 @@ render() {
 }
 
 const mapStateToProps = (state) => ({
+  account: selectAccountUid(state),
   transactions: selectAllTransactions(state),
   outboundTransactions: selectAllOutgoingTransactions(state), 
   inboundTransactions: selectAllInboundTransactions(state), 
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  getTransactions: () => dispatch(getTransactions())
+  getTransactions: () => dispatch(getTransactions()),
+  getAccountDetails: () => dispatch(getAccountDetails())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

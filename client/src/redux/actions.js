@@ -19,6 +19,23 @@ const getTranasctionsSuccess = payload => (dispatch) => {
     })
 }
 
+export const getAccountDetails = () => async dispatch => {
+    try {
+        AccountsApi.getAccountDetails().then(response => dispatch(getAccountDetailsSuccess(response.data.accounts)))
+    } catch (err) {
+        console.log(err, 'Get account details failed')
+    }
+}
+
+const getAccountDetailsSuccess = payload => dispatch => {
+    dispatch({
+       type: 'GET_ACCOUNT_DETAILS_SUCCESS',
+       payload
+    })
+}
+
+
+
 export const createGoal = accountUid => async dispatch => {
     try {
         AccountsApi.createGoal(accountUid).then(response => dispatch(createGoalSuccess(response)))

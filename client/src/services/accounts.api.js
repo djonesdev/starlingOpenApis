@@ -1,6 +1,13 @@
 import axios from 'axios'
 
 export default {
+    getAccountDetails: () => {
+        return axios({
+            url: `https://api-sandbox.starlingbank.com/api/v2/accounts`,
+            method: 'GET', 
+            headers: { Authorization: "Bearer Y5G2lM4uSbJefiNgFllnPTCdCWxvVPUn7VC0axYWpL3cbLYy1DZ9BN8fb9xbeUtM", Accept: "application/json" },
+        })
+    },
     createGoal: (accountUid) => {
         return axios({
             url: `https://api-sandbox.starlingbank.com/api/v2/account/${accountUid}/savings-goals`,
@@ -10,7 +17,7 @@ export default {
     },
     transferToGoal: (accountUid, savingsGoalUid) => {
         return axios({
-            url: `https://api-sandbox.starlingbank.com/api/v2/account/${accountUid}/savings-goals/${savingsGoalUid}/add-money/{transferUid}`,
+            url: `https://api-sandbox.starlingbank.com/api/v2/account/my/savings-goals/${savingsGoalUid}/add-money/{transferUid}`,
             method: 'GET', 
             headers: { Authorization: "Bearer Y5G2lM4uSbJefiNgFllnPTCdCWxvVPUn7VC0axYWpL3cbLYy1DZ9BN8fb9xbeUtM", "accessToken": 'Y5G2lM4uSbJefiNgFllnPTCdCWxvVPUn7VC0axYWpL3cbLYy1DZ9BN8fb9xbeUtM' },
         })
