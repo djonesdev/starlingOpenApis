@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios'
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { getTransactions } from './redux/actions';
 import logo from './logo.svg';
 import './App.css';
 
@@ -11,22 +13,9 @@ class App extends Component {
     responseToPost: '',
   };
   componentDidMount() {
-    this.callApi()
-      .then(res => this.setState({ response: res.express }))
-      .catch(err => console.log(err));
+    this.props.getTransactions()
+    console.log('get Transactions', this.props.getTransactions())
   }
-  callApi = async () => {
-    // const response = await fetch('https://api-sandbox.starlingbank.com/api/v1/transactions');
-    // const body = await response.json();
-    // console.log(body)
-    // if (response.status !== 200) throw Error(body.message);
-    // return body;
-    axios.get('https://api-sandbox.starlingbank.com/api/v1/transactions',{
-          method: 'GET', 
-          timeout: 4000, 
-          headers: { Authorization: "Bearer Y5G2lM4uSbJefiNgFllnPTCdCWxvVPUn7VC0axYWpL3cbLYy1DZ9BN8fb9xbeUtM", "accessToken": 'Y5G2lM4uSbJefiNgFllnPTCdCWxvVPUn7VC0axYWpL3cbLYy1DZ9BN8fb9xbeUtM' }
-      }).then(response => this.setState({response: response.data._embedded.transactions}))
-  };
   handleSubmit = async e => {
     e.preventDefault();
     const response = await fetch('/api/sandbox/transactions', {
@@ -41,7 +30,7 @@ class App extends Component {
     this.setState({ responseToPost: body });
   };
 render() {
-  console.log(this.state.response)
+  console.log('transactions', this.props.transactions)
     return (
       <div className="App">
         <header className="App-header">
@@ -59,6 +48,7 @@ render() {
           </a>
         </header>
         <p>{this.state.response.map(transaction => <p key={transaction.id}>Amount: {transaction.amount}</p>)}</p>
+        <p>{JSON.stringify(this.props.transactions)}</p>
         <form onSubmit={this.handleSubmit}>
           <p>
             <strong>Post to Server:</strong>
@@ -75,4 +65,13 @@ render() {
     );
   }
 }
-export default App;
+
+const mapStateToProps = (state) => ({
+  transactions: state.transactions
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  getTransactions: () => dispatch(getTransactions())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
