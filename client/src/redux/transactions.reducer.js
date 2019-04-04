@@ -1,13 +1,14 @@
 const initialState = {
-    transactions: {}
+    transactions: []
 }
 
 export const transactionsReducer = (state = initialState, action)  => {
+    const { payload } = action
     switch (action.type) {
-      case 'GET_API_SUCCESS':
-      console.log(action.payload)
+      case 'GET_TRANSACTIONS_SUCCESS':
       return {
-          transactions: action.payload,
+          ...state,
+          transactions: payload,
       }
      default:
       return state
