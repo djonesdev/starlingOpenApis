@@ -1,9 +1,9 @@
 import TransactionApi from '../services/transactions.api'
 import AccountsApi from '../services/accounts.api';
 
-export const getTransactions = () => async dispatch => {
+export const getTransactions = (params) => async dispatch => {
     try {
-      TransactionApi.getTransactions().then(response => {
+      TransactionApi.getTransactions(params).then(response => {
           dispatch(getTranasctionsSuccess(response.data._embedded.transactions))
       })
       console.log(typeof result)

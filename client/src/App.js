@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment'
 import { getTransactions, getAccountDetails } from './redux/actions';
 import { TransactionItem } from './components/TransactionItem'
-import { Card } from './components/Card'
 import './App.css';
 import { selectAllTransactions, selectAllOutgoingTransactions, selectAllInboundTransactions, selectAccountUid } from './redux/selectors';
 
 
 class App extends Component {
-  state = {
-    response: [],
-    post: '',
-    responseToPost: '',
-  };
 
   componentDidMount() {
+    const dateRange = { from: moment("2019-01-05").format("YYYY-MM-DD"), to: moment("2019-01-05").format("YYYY-MM-DD") }
+    this.props.getTransactions(dateRange)
     this.props.getAccountDetails()
   }
 
@@ -39,11 +36,21 @@ class App extends Component {
   }
 
 render() {
+  console.log("transactions", this.props.transactions)
+
+//   amount: -4.77
+// balance: 2235.15
+// created: "2019-04-04T14:20:17.970Z"
+// currency: "GBP"
+// direction: "OUTBOUND"
+// id: "4d1c613b-0825-57d9-0448-c2b5631ee2d4"
+// narrative: "External Payment"
+// source: "FASTER_PAYMENTS_OUT"
     return (
       <div className="App">
         <header className="App-header">
-        <p>{this.props.inboundTransactions.map(transaction => <p>{transaction.amount}</p>)}</p>
-        <TransactionItem/>
+        {/* {this.props.inboundTransactions.map(transaction => <p>{transaction.amount}</p>)} */}
+        {this.props.transactions.map(transaction => <TransactionItem amount={transaction.amount} balance={transaction.balance} />)}
         </header>
         <h3>Your total round up for this month</h3>
         <p>{this.displayRoundUp(this.props.outboundTransactions)}</p>
@@ -60,7 +67,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  getTransactions: () => dispatch(getTransactions()),
+  getTransactions: (dateRange) => dispatch(getTransactions(dateRange)),
   getAccountDetails: () => dispatch(getAccountDetails())
 })
 
