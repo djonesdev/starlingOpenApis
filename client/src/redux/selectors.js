@@ -6,3 +6,6 @@ export const selectAllInboundTransactions = (state) => selectAllTransactions(sta
 
 export const selectAccountUid = (state) => state.account.account[0]
 
+export const selectGoals = (state) => state.account.goals.savingsGoalList
+
+export const selectTransferAmount = (state) => state.account.transferAmount

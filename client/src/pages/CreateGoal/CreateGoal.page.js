@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import { CreateGoalView } from './CreateGoal'
-import { createGoal } from '../../redux/actions';
-import { selectAccountUid } from '../../redux/selectors';
+import { createGoal } from '../../redux/actions'
+import GoalsApi from '../../services/goals.api'
+import { selectAccountUid, selectGoals, selectTransferAmount } from '../../redux/selectors'
 
 
 
@@ -15,27 +16,43 @@ class CreateGoal extends Component {
 
   createGoal = async e => {
     const { createGoal, account } = this.props
-    e.preventDefault();
-    createGoal(account.accountUid)
+    const { name } = this.state
+    const payload = {
+      name,
+      accountUid: account.accountUid
+    }
+    await createGoal(payload)
   };
 
-  onChangeName = (e) => {
+  onChangeName = e => {
     this.setState({ name: e.target.value })
   }
 
+  deleteGoal = () => {
+    GoalsApi.deleteGoal()
+  }
+
 render() {
+  const { transferAmount } = this.props 
     return (
-      <CreateGoalView onChangeName={this.onChangeName} createGoal={this.createGoal}/>
+      <div>
+        <button onClick={this.deleteGoal}></button>
+        <CreateGoalView onChangeName={this.onChangeName} transferAmount={transferAmount} createGoal={this.createGoal}/>
+        {this.props.goals && <p>{this.props.goals}</p>}
+      </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
   account: selectAccountUid(state),
+  transferAmount: selectTransferAmount(state), 
+  goals: selectGoals(state),
+  state
 })
 
 const mapDispatchToProps = dispatch => ({
-  createGoal: accountUid => dispatch(createGoal(accountUid)),
+  createGoal: payload => dispatch(createGoal(payload)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateGoal);

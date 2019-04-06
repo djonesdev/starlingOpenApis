@@ -4,12 +4,11 @@ var config = require('../config.json')
 var router = express.Router()
 
 router.get('/', async function(req, res, next) {
-    axios.get(`${config.baseUrl}/api/v1/transactions?source=${undefined}&fromDate=${undefined}&toDate=${undefined}`, { headers: config.defaultHeaders })
+    console.log(req.query)
+    axios.get(`${config.baseUrl}/api/v1/transactions?from=${req.query.from}&to=${req.query.to}`, { headers: config.defaultHeaders })
     .then(response => {
-        console.log(response.data._embedded.transactions)
         res.send(response.data._embedded.transactions)
    })
 })
-
 
 module.exports = router

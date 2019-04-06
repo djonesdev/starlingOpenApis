@@ -1,6 +1,7 @@
 import TransactionApi from '../services/transactions.api'
-import AccountsApi from '../services/accounts.api'
 import GoalsApi from '../services/goals.api'
+
+// Transaction Actions
 
 export const getTransactions = params => async dispatch => {
     try {
@@ -8,29 +9,23 @@ export const getTransactions = params => async dispatch => {
           dispatch(getTranasctionsSuccess(response.data))
       })
     } catch (err) {
+        dispatch(getTranasctionsError(err))
         console.error(err, 'call failed')
     }
 }
 
-const getTranasctionsSuccess = payload => (dispatch) => {
+const getTranasctionsSuccess = payload => dispatch => {
     dispatch({
        type: 'GET_TRANSACTIONS_SUCCESS',
        payload: payload
     })
 }
 
-export const getAccountDetails = () => async dispatch => {
-    try {
-        AccountsApi.getAccountDetails().then(response => dispatch(getAccountDetailsSuccess(response.data.accounts)))
-    } catch (err) {
-        console.log(err, 'Get account details failed')
-    }
-}
 
-const getAccountDetailsSuccess = payload => dispatch => {
+const getTranasctionsError = payload => dispatch => {
     dispatch({
-       type: 'GET_ACCOUNT_DETAILS_SUCCESS',
-       payload
+       type: 'GET_TRANSACTIONS_ERROR',
+       payload: payload
     })
 }
 
@@ -40,22 +35,34 @@ export const getGoals = accountUid => async dispatch => {
     try {
       GoalsApi.getGoals(accountUid).then(response => {
           dispatch(getGoalsSuccess(response.data))
-      })
-    } catch (err) {
+        })
+        } catch (err) {
+            dispatch(getGoalsError(err))
         console.error(err, 'get goals call failed')
     }
 }
 
-const getGoalsSuccess = payload => (dispatch) => {
+const getGoalsSuccess = payload => dispatch => {
     dispatch({
        type: 'GET_GOAL_SUCCESS',
        payload: payload
     })
 }
 
-export const createGoal = accountUid => async dispatch => {
+const getGoalsError = payload => dispatch => {
+    dispatch({
+       type: 'GET_GOAL_ERROR',
+       payload: payload
+    })
+}
+
+export const createGoal = payload => async dispatch => {
     try {
-        GoalsApi.createGoal(accountUid).then(response => dispatch(createGoalSuccess(response)))
+        GoalsApi.createGoal(payload)
+        .then(response => {
+            dispatch(createGoalSuccess(response))
+            dispatch(getGoals(payload.accountUid))
+        })
     } catch (err) {
         console.log(err, 'Goal creation failed')
     }
@@ -68,10 +75,11 @@ const createGoalSuccess = payload => dispatch => {
     })
 }
 
-export const transferToGoal = (accountUid, savingsGoalUid) => async dispatch => {
+export const transferToGoal = payload => async dispatch => {
     try {
-        GoalsApi.transferToGoal(accountUid, savingsGoalUid).then(response => dispatch(goalTransferSuccess(response)))
+        GoalsApi.transferToGoal(payload).then(response => dispatch(goalTransferSuccess(response)))
     } catch (err) {
+        dispatch(goalTransferError(err))
         console.log(err, 'Goal transfer failed')
     }
 }
@@ -82,3 +90,12 @@ const goalTransferSuccess = payload => dispatch => {
         payload: payload
      })
 }
+
+
+const goalTransferError = payload => dispatch => {
+    dispatch({
+        type: 'GOAL_TRANSFER_ERROR',
+        payload: payload
+    })
+}
+

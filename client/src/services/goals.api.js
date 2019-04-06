@@ -3,24 +3,28 @@ import axios from 'axios'
 export default {
     getGoals: accountUid => {
         return axios({
-            url: `https://api-sandbox.starlingbank.com/api/v2/account/${accountUid}/savings-goals`,
+            url: `goals/${accountUid}`,
             method: 'GET', 
-            headers: { Authorization: "Bearer C9WbmFt5WXnL8Dbbb0fLYfaB9DcETFgzvtXYz8YyP4gtNxo4ngw9RXhiUXDZSenB", Accept: "application/json" },
         })
     },
-    createGoal: accountUid => {
+    createGoal: params => {
+        const { name, accountUid } = params
         return axios({
-            url: `https://api-sandbox.starlingbank.com/api/v2/account/${accountUid}/savings-goals`,
-            data: { name: "Super sweet savings pool", currency: "GBP", target: { currency: 'GBP' } },
+            url: `goals/${accountUid}/${name}`,
             method: 'PUT', 
-            headers: { Authorization: "Bearer C9WbmFt5WXnL8Dbbb0fLYfaB9DcETFgzvtXYz8YyP4gtNxo4ngw9RXhiUXDZSenB", Accept: "application/json" },
         })
     },
-    transferToGoal: (accountUid, savingsGoalUid) => {
+    deleteGoal: (accountUid, savingsGoalUid) => {
         return axios({
-            url: `https://api-sandbox.starlingbank.com/api/v2/account/my/savings-goals/${savingsGoalUid}/add-money/{transferUid}`,
-            method: 'GET', 
-            headers: { Authorization: "Bearer C9WbmFt5WXnL8Dbbb0fLYfaB9DcETFgzvtXYz8YyP4gtNxo4ngw9RXhiUXDZSenB", Accept: "application/json" },
+            url: `/account/4cc9c6f5-9dbf-9a06-e51a-02751e5ca695/savings-goals/eb5036b3-c033-4df7-b7e2-12354a55e3d0`,
+            method: 'DELETE', 
+        })
+    },
+    transferToGoal: params => {
+        const { accountUid, savingsGoalUid, transferUid, amount } = params
+        return axios({
+            url: `goals/${accountUid}/${savingsGoalUid}/add-money/${transferUid}?amount=${amount}`,
+            method: 'PUT',
         })
     }
 }
