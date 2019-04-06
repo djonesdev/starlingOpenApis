@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { CreateGoalView } from './CreateGoal'
-import { createGoal } from '../../redux/actions'
+import { createGoal } from './CreateGoal.redux'
 import GoalsApi from '../../services/goals.api'
 import { selectAccountUid, selectGoals, selectTransferAmount } from '../../redux/selectors'
 

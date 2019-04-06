@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 import { connect } from 'react-redux'
-import { getTransactions, getAccountDetails, setTransferAmount } from './transactions.redux'
+import { getTransactions, getAccountDetails, setTransferAmount } from './Transactions.redux'
 import { selectAllTransactions, selectAllOutgoingTransactions, selectAllInboundTransactions } from '../../redux/selectors'
 
 
-import { Transactions } from './transactions'
+import { Transactions } from './Transactions'
 
 class TransactionsPage extends Component {
     state = {

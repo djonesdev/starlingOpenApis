@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getAccountDetails } from './pages/Transactions/transactions.redux';
+import { getAccountDetails } from './pages/Transactions/Transactions.redux';
 import './App.css';
 
 

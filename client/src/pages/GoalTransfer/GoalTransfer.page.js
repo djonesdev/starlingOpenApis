@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import uuid from 'uuid'
 
 import { GoalTransfer } from './GoalTransfer'
-import { transferToGoal } from '../../redux/actions'
+import { transferToGoal } from './GoalTransfer.redux'
 import { selectAccountUid, selectGoals, selectTransferAmount } from '../../redux/selectors';
 import { majorUnitsToMinor } from '../../util/text-formatter';
 
