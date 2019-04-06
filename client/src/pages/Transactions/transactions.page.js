@@ -45,12 +45,14 @@ class TransactionsPage extends Component {
   render() {
     const { transactions } = this.props
     const { roundUp } = this.state
+    const hasTransactions = transactions.length >= 1
     return (
         <Transactions 
             transactions={transactions}
             handleSubmit={this.handleSubmit}
             displayRoundUp={roundUp}
             navigateToGoal={this.onClickNavigateToGoal}
+            hasTransaction={hasTransactions}
         />
     )
   }

@@ -9,8 +9,8 @@ export const Transactions = (props) => {
         displayRoundUp, 
         transactions,
         navigateToGoal,
+        hasTransactions
     } = props
-        const hasTransactions = transactions.length >= 1
         return (
           <div className='page-container'>
             <div className='date-picker'>

@@ -14,7 +14,7 @@ export const getTransactions = params => async dispatch => {
     }
 }
 
-const getTranasctionsSuccess = payload => dispatch => {
+export const getTranasctionsSuccess = payload => dispatch => {
     dispatch({
        type: 'GET_TRANSACTIONS_SUCCESS',
        payload: payload
@@ -22,7 +22,7 @@ const getTranasctionsSuccess = payload => dispatch => {
 }
 
 
-const getTranasctionsError = payload => dispatch => {
+export const getTranasctionsError = payload => dispatch => {
     dispatch({
        type: 'GET_TRANSACTIONS_ERROR',
        payload: payload
@@ -47,14 +47,14 @@ export const getAccountDetails = () => async dispatch => {
     }
 }
 
-const getAccountDetailsSuccess = payload => dispatch => {
+export const getAccountDetailsSuccess = payload => dispatch => {
     dispatch({
        type: 'GET_ACCOUNT_DETAILS_SUCCESS',
        payload
     })
 }
 
-const getAccountDetailsError = payload => dispatch => {
+export const getAccountDetailsError = payload => dispatch => {
     dispatch({
        type: 'GET_ACCOUNT_DETAILS_ERROR',
        payload

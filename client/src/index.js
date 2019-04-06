@@ -8,7 +8,7 @@ import * as serviceWorker from './serviceWorker';
 import configureStore from './store';
 import CreateGoalPage from './pages/CreateGoal/CreateGoal.page';
 import GoalTransferPage from './pages/GoalTransfer/GoalTransfer.page';
-import TransactionsPage from './pages/Transactions/transactions.page';
+import TransactionsPage from './pages/Transactions/Transactions.page';
 
 const routing = (
     <Router>

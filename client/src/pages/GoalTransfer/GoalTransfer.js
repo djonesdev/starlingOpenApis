@@ -14,7 +14,7 @@ export const GoalTransfer = (props) => {
             }
             <h3>Transfer Round Up Amount</h3>
             <p>{`£${transferAmount}`}</p>
-            <Button label='Make Transfer' onClick={onClick} />
+            <Button className="button" label='Make Transfer' onClick={onClick} />
         </div>
     )
 }

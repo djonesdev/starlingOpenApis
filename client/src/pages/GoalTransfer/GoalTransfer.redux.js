@@ -9,7 +9,7 @@ export const transferToGoal = payload => async dispatch => {
     }
 }
 
-const goalTransferSuccess = payload => dispatch => {
+export const goalTransferSuccess = payload => dispatch => {
     dispatch({
         type: 'GOAL_TRANSFER_SUCCESS',
         payload: payload
@@ -17,7 +17,7 @@ const goalTransferSuccess = payload => dispatch => {
 }
 
 
-const goalTransferError = payload => dispatch => {
+export const goalTransferError = payload => dispatch => {
     dispatch({
         type: 'GOAL_TRANSFER_ERROR',
         payload: payload
