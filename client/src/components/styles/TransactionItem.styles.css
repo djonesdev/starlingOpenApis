@@ -1,0 +1,10 @@
+.flex-container {
+    display: flex;
+}
+
+.balance-container {
+    width: 80%;
+    margin: 5px;
+    background-color: red;
+    display: flex;
+}

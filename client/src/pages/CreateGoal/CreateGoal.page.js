@@ -18,10 +18,10 @@ class CreateGoal extends Component {
       base64EncodedPhoto: ''
   }
 
-
   createGoal = async e => {
     const { createGoal, account } = this.props
     e.preventDefault();
+    console.log('accountUid', account.accountUid)
     createGoal(account.accountUid)
   };
 
@@ -36,15 +36,12 @@ render() {
   }
 }
 
-const mapStateToProps = (state) => ({
-  // transactions: selectAllTransactions(state),
+const mapStateToProps = state => ({
   account: selectAccountUid(state),
-  // outboundTransactions: selectAllOutgoingTransactions(state), 
-  // inboundTransactions: selectAllInboundTransactions(state), 
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  createGoal: accountUid => dispatch(createGoal(accountUid))
+const mapDispatchToProps = dispatch => ({
+  createGoal: accountUid => dispatch(createGoal(accountUid)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateGoal);

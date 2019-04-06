@@ -1,20 +1,13 @@
 import axios from 'axios'
-import moment from 'moment'
 
 export default {
-    getTransactions: (params) => {
+    getTransactions: params => {
         const { from, to } = params
-        console.log(params)
-        let url
-        if(!params.from && !params.to) {
-            url = `https://api-sandbox.starlingbank.com/api/v1/transactions`
-        } else {
-            url = `https://api-sandbox.starlingbank.com/api/v1/transactions?fromDate=${from}&toDate=${to}`
-        }
+        const url = `https://api-sandbox.starlingbank.com/api/v1/transactions?source=${undefined}&fromDate=${from}&toDate=${to}`
         return axios({
             url: url,
             method: 'GET', 
-            headers: { Authorization: "Bearer Y5G2lM4uSbJefiNgFllnPTCdCWxvVPUn7VC0axYWpL3cbLYy1DZ9BN8fb9xbeUtM", "accessToken": 'Y5G2lM4uSbJefiNgFllnPTCdCWxvVPUn7VC0axYWpL3cbLYy1DZ9BN8fb9xbeUtM' },
+            headers: { Authorization: "Bearer C9WbmFt5WXnL8Dbbb0fLYfaB9DcETFgzvtXYz8YyP4gtNxo4ngw9RXhiUXDZSenB", "accessToken": 'Y5G2lM4uSbJefiNgFllnPTCdCWxvVPUn7VC0axYWpL3cbLYy1DZ9BN8fb9xbeUtM' },
         })
     }
 }

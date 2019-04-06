@@ -1,6 +1,6 @@
 const initialState = {
     account: [],
-    goal: []
+    goals: []
 }
 
 export const accountsReducer = (state = initialState, action)  => {
@@ -11,15 +11,20 @@ export const accountsReducer = (state = initialState, action)  => {
                 ...state, 
                 account: payload
             }
+        case 'GET_GOAL_SUCCESS':
+            return {
+                ...state,
+                goals: payload,
+            }
         case 'CREATE_GOAL_SUCCESS':
             return {
                 ...state,
-                goal: payload,
+                goals: payload,
             }
         case 'GOAL_TRANSFER_SUCCESS':
             return {
                 ...state, 
-                goal: payload
+                goals: payload
             }
         default:
             return state

@@ -5,21 +5,7 @@ export default {
         return axios({
             url: `https://api-sandbox.starlingbank.com/api/v2/accounts`,
             method: 'GET', 
-            headers: { Authorization: "Bearer Y5G2lM4uSbJefiNgFllnPTCdCWxvVPUn7VC0axYWpL3cbLYy1DZ9BN8fb9xbeUtM", Accept: "application/json" },
+            headers: { Authorization: "Bearer C9WbmFt5WXnL8Dbbb0fLYfaB9DcETFgzvtXYz8YyP4gtNxo4ngw9RXhiUXDZSenB", Accept: "application/json" },
         })
     },
-    createGoal: (accountUid) => {
-        return axios({
-            url: `https://api-sandbox.starlingbank.com/api/v2/account/${accountUid}/savings-goals`,
-            method: 'GET', 
-            headers: { Authorization: "Bearer Y5G2lM4uSbJefiNgFllnPTCdCWxvVPUn7VC0axYWpL3cbLYy1DZ9BN8fb9xbeUtM", Accept: "application/json" },
-        })
-    },
-    transferToGoal: (accountUid, savingsGoalUid) => {
-        return axios({
-            url: `https://api-sandbox.starlingbank.com/api/v2/account/my/savings-goals/${savingsGoalUid}/add-money/{transferUid}`,
-            method: 'GET', 
-            headers: { Authorization: "Bearer Y5G2lM4uSbJefiNgFllnPTCdCWxvVPUn7VC0axYWpL3cbLYy1DZ9BN8fb9xbeUtM", "accessToken": 'Y5G2lM4uSbJefiNgFllnPTCdCWxvVPUn7VC0axYWpL3cbLYy1DZ9BN8fb9xbeUtM' },
-        })
-    }
 }

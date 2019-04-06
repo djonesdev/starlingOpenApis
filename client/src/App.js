@@ -2,72 +2,84 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment'
 import { getTransactions, getAccountDetails } from './redux/actions';
-import { TransactionItem } from './components/TransactionItem'
+import { TransactionItem } from './components/TransactionItem';
+import { Button } from './components/Button';
+import { DateRangePicker } from './components/DateRangePicker';
 import './App.css';
 import { selectAllTransactions, selectAllOutgoingTransactions, selectAllInboundTransactions, selectAccountUid } from './redux/selectors';
+import { formatDob } from './util/text-formatter'
 
 
 class App extends Component {
+  state = {
+    fromDate: '', 
+    toDate: '',
+  }
 
   componentDidMount() {
-    const dateRange = { from: moment("2019-01-05").format("YYYY-MM-DD"), to: moment("2019-01-05").format("YYYY-MM-DD") }
-    this.props.getTransactions(dateRange)
     this.props.getAccountDetails()
   }
 
-
   handleSubmit = async e => {
-    e.preventDefault();
-    const response = await fetch('/api/sandbox/transactions', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ post: this.state.post }),
-    });
-    const body = await response.text();
-    this.setState({ responseToPost: body });
+    e.preventDefault()
+    const { getTransactions } = this.props
+    const { fromDate, toDate } = this.state
+    console.log('fromDate', fromDate)
+    console.log('toDate', toDate)
+    const dateRange = { 
+      from: moment(fromDate).format('YYYY-MM-DD'), 
+      to: moment(toDate).format('YYYY-MM-DD'),
+    }
+    getTransactions(dateRange)
   };
 
-  displayRoundUp = transactionAmounts => {
+  displayRoundUp = transactions => {
     let roundUpAmount = 0
-    transactionAmounts.map(transaction => roundUpAmount = roundUpAmount + Math.ceil(Math.abs(transaction.amount)) + transaction.amount)
-    return roundUpAmount
+    transactions.map(transaction => roundUpAmount = roundUpAmount + Math.ceil(Math.abs(transaction.amount)) + transaction.amount)
+    return `£${roundUpAmount.toFixed(2)}`
+  }
+
+  onCangeFromDate = e => {
+    const formattedDob = formatDob(e.target.value)
+    this.setState({ fromDate: formattedDob})
+  }
+  
+  onCangeToDate = e => {
+    const formattedDob = formatDob(e.target.value)
+    this.setState({ toDate: formattedDob })
   }
 
 render() {
-  console.log("transactions", this.props.transactions)
-
-//   amount: -4.77
-// balance: 2235.15
-// created: "2019-04-04T14:20:17.970Z"
-// currency: "GBP"
-// direction: "OUTBOUND"
-// id: "4d1c613b-0825-57d9-0448-c2b5631ee2d4"
-// narrative: "External Payment"
-// source: "FASTER_PAYMENTS_OUT"
     return (
-      <div className="App">
-        <header className="App-header">
-        {/* {this.props.inboundTransactions.map(transaction => <p>{transaction.amount}</p>)} */}
-        {this.props.transactions.map(transaction => <TransactionItem amount={transaction.amount} balance={transaction.balance} />)}
-        </header>
-        <h3>Your total round up for this month</h3>
-        <p>{this.displayRoundUp(this.props.outboundTransactions)}</p>
-      </div>
+      // <div className="App">
+        <header className="App-header"/>
+      //   <h3>Would you like to view your transactions?</h3>
+      //   <DateRangePicker 
+      //     onChangeFromDate={this.onCangeFromDate} 
+      //     onChangeToDate={this.onCangeToDate} 
+      //     fromDateValue={this.state.fromDate}
+      //     toDateValue={this.state.toDate}
+      //   />
+      //   <Button onClick={this.handleSubmit} label="GET TRANSACTIONS"/>
+      //   {this.props.transactions && <div className="table-container">
+      //     <TransactionItem transactions={this.props.transactions} />
+      //   </div>}
+      //   <h3>Would you like to put your round-up into your savings goal?</h3>
+      //   <h3>Your total round up for this month</h3>
+      //   <p>{this.displayRoundUp(this.props.outboundTransactions)}</p>
+      // </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  account: selectAccountUid(state),
   transactions: selectAllTransactions(state),
   outboundTransactions: selectAllOutgoingTransactions(state), 
   inboundTransactions: selectAllInboundTransactions(state), 
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  getTransactions: (dateRange) => dispatch(getTransactions(dateRange)),
+  getTransactions: dateRange => dispatch(getTransactions(dateRange)),
   getAccountDetails: () => dispatch(getAccountDetails())
 })
 
