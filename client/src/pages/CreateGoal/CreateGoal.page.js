@@ -11,17 +11,11 @@ class CreateGoal extends Component {
   state = {
       name: '',
       currency: 'GBP',
-      target: {
-        currency: 'GBP',
-        minorUnits: 0
-      },
-      base64EncodedPhoto: ''
   }
 
   createGoal = async e => {
     const { createGoal, account } = this.props
     e.preventDefault();
-    console.log('accountUid', account.accountUid)
     createGoal(account.accountUid)
   };
 

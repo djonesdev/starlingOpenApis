@@ -3,7 +3,7 @@ var axios = require('axios')
 var config = require('../config.json')
 var router = express.Router()
 
-router.get('/', async function(res) {
+router.get('/', async function(req, res, next) {
     axios.get(`${config.baseUrl}/api/v1/transactions?source=${undefined}&fromDate=${undefined}&toDate=${undefined}`, { headers: config.defaultHeaders })
     .then(response => {
         console.log(response.data._embedded.transactions)

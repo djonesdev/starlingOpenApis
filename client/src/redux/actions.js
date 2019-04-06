@@ -5,7 +5,7 @@ import GoalsApi from '../services/goals.api'
 export const getTransactions = params => async dispatch => {
     try {
       TransactionApi.getTransactions(params).then(response => {
-          dispatch(getTranasctionsSuccess(response.data._embedded.transactions))
+          dispatch(getTranasctionsSuccess(response.data))
       })
     } catch (err) {
         console.error(err, 'call failed')

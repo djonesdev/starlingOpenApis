@@ -34,8 +34,6 @@ class TransactionsPage extends Component {
         e.preventDefault();
         const { getTransactions } = this.props
         const { fromDate, toDate } = this.state
-        // console.log('fromDate', fromDate)
-        // console.log('toDate', toDate)
         const dateRange = { 
           from: moment(fromDate).format('YYYY-MM-DD'), 
           to: moment(toDate).format('YYYY-MM-DD'),
@@ -72,5 +70,5 @@ const mapStateToProps = (state) => ({
     getAccountDetails: () => dispatch(getAccountDetails())
   })
 
-export default connect(mapStateToProps, mapDispatchToProps)(TransactionsPage)
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionsPage);
 

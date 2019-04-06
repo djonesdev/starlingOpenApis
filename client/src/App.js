@@ -50,25 +50,7 @@ class App extends Component {
   }
 
 render() {
-    return (
-      // <div className="App">
-        <header className="App-header"/>
-      //   <h3>Would you like to view your transactions?</h3>
-      //   <DateRangePicker 
-      //     onChangeFromDate={this.onCangeFromDate} 
-      //     onChangeToDate={this.onCangeToDate} 
-      //     fromDateValue={this.state.fromDate}
-      //     toDateValue={this.state.toDate}
-      //   />
-      //   <Button onClick={this.handleSubmit} label="GET TRANSACTIONS"/>
-      //   {this.props.transactions && <div className="table-container">
-      //     <TransactionItem transactions={this.props.transactions} />
-      //   </div>}
-      //   <h3>Would you like to put your round-up into your savings goal?</h3>
-      //   <h3>Your total round up for this month</h3>
-      //   <p>{this.displayRoundUp(this.props.outboundTransactions)}</p>
-      // </div>
-    );
+    return <header className="App-header"/>
   }
 }
 
