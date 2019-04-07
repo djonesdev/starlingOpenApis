@@ -36,7 +36,6 @@ router.delete('/:accountUid/savings-goals/:savingsGoalUid', async function(req, 
 })
 
 router.put('/:accountUid/:savingsGoalUid/add-money/:transferUid', async function(req, res, next) {
-    console.log('REDPARAMS', req.query)
     try {
         axios.put(
             `${config.baseUrl}/api/v2/account/${req.params.accountUid}/savings-goals/${req.params.savingsGoalUid}/add-money/${req.params.transferUid}`,
@@ -49,22 +48,11 @@ router.put('/:accountUid/:savingsGoalUid/add-money/:transferUid', async function
             { headers: config.defaultHeaders }
         )
         .then(response => {
-            console.log('transferRESPONSe', response)
             res.send(response.data)
         })
     } catch (err) {
         console.log(err, 'failed to make transfer')
     }
 })
-
-// data then config
-
-// transferToGoal: (accountUid, savingsGoalUid) => {
-//     return axios({
-//         url: `https://api-sandbox.starlingbank.com/api/v2/account/my/savings-goals/${savingsGoalUid}/add-money/{transferUid}`,
-//         method: 'GET', 
-//         headers: { Authorization: "Bearer C9WbmFt5WXnL8Dbbb0fLYfaB9DcETFgzvtXYz8YyP4gtNxo4ngw9RXhiUXDZSenB", Accept: "application/json" },
-//     })
-// }
 
 module.exports = router
