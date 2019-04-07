@@ -41,15 +41,10 @@ class CreateGoal extends Component {
     this.setState({ name: e.target.value })
   }
 
-  deleteGoal = () => {
-    GoalsApi.deleteGoal()
-  }
-
-render() {
-  const { transferAmount } = this.props 
+  render() {
+    const { transferAmount } = this.props 
     return (
       <div>
-        <button onClick={this.deleteGoal}></button>
         <CreateGoalView 
           onChangeName={this.onChangeName} 
           transferAmount={transferAmount} 

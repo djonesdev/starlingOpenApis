@@ -28,13 +28,6 @@ router.put('/:accountUid/:goalName', async function(req, res, next) {
     })
 })
 
-router.delete('/:accountUid/savings-goals/:savingsGoalUid', async function(req, res, next) {
-    axios.delete(
-        `${config.baseUrl}/api/v2/account/${req.params.accountUid}/savings-goals/${req.params.savingsGoalUid}`,
-        { headers: config.defaultHeaders }
-    )
-})
-
 router.put('/:accountUid/:savingsGoalUid/add-money/:transferUid', async function(req, res, next) {
     try {
         axios.put(
