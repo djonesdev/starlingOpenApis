@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 
 import { CreateGoalView } from './CreateGoal'
 import { createGoal, getGoals } from './CreateGoal.redux'
-import GoalsApi from '../../services/goals.api'
 import { selectAccountUid, selectTransferAmount } from '../../redux/selectors'
 
 
