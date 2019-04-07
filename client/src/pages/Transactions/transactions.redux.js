@@ -29,10 +29,10 @@ export const getTranasctionsError = payload => dispatch => {
     })
 }
 
-export const setTransferAmount = amount => {
+export const setTransferAmount = payload => {
     return {
         type: 'SET_TRANSFER_AMOUNT',
-        payload: amount,
+        payload,
     }
 }
 

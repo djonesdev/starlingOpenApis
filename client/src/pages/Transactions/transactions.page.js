@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import moment from 'moment'
 import { connect } from 'react-redux'
 import { getTransactions, getAccountDetails, setTransferAmount } from './Transactions.redux'
-import { selectAllTransactions, selectAllOutgoingTransactions, selectAllInboundTransactions } from '../../redux/selectors'
+import { selectAllTransactions, selectAllOutgoingTransactions, selectAllInboundTransactions, selectNonRoundUpTransactions } from '../../redux/selectors'
 
 
 import { Transactions } from './Transactions'
@@ -14,7 +14,7 @@ class TransactionsPage extends Component {
  
     componentDidUpdate = (prevProps) => {
         if(this.props.transactions !== prevProps.transactions) {
-            this.displayRoundUp(this.props.outboundTransactions)
+            this.displayRoundUp(this.props.cleanTransactions)
         }
     }
     
@@ -37,37 +37,49 @@ class TransactionsPage extends Component {
     };
 
     onClickNavigateToGoal = e => {
-        const { setTransferAmount } = this.props
+        const { initTransfer, transactions } = this.props
         const { roundUp } = this.state
-        setTransferAmount(roundUp)
+        const dirtyTransactions = []
+        transactions.map(transaction => dirtyTransactions.push(transaction.id))
+        const payload = {
+            amount: roundUp,
+            dirtyTransactions: dirtyTransactions
+        }
+        initTransfer(payload)
     }
 
   render() {
     const { transactions } = this.props
     const { roundUp } = this.state
     const hasTransactions = transactions.length >= 1
+    const isGoalButtonDisabled = roundUp === 0 
     return (
         <Transactions 
             transactions={transactions}
             handleSubmit={this.handleSubmit}
             displayRoundUp={roundUp}
             navigateToGoal={this.onClickNavigateToGoal}
-            hasTransaction={hasTransactions}
+            hasTransactions={hasTransactions}
+            isGoalButtonDisabled={isGoalButtonDisabled}
         />
     )
   }
 }
 
-const mapStateToProps = (state) => ({
-    transactions: selectAllTransactions(state),
-    outboundTransactions: selectAllOutgoingTransactions(state), 
-    inboundTransactions: selectAllInboundTransactions(state), 
-  })
+const mapStateToProps = state => {
+    const hasDirtyTransactions = !!state.goals.dirtyTransactions > 0
+    return {
+        cleanTransactions: hasDirtyTransactions && selectNonRoundUpTransactions(state), 
+        transactions: selectAllTransactions(state),
+        outboundTransactions: selectAllOutgoingTransactions(state), 
+        inboundTransactions: selectAllInboundTransactions(state), 
+    }
+}
   
-  const mapDispatchToProps = (dispatch) => ({
-    getTransactions: (dateRange) => dispatch(getTransactions(dateRange)),
+  const mapDispatchToProps = dispatch => ({
+    getTransactions: dateRange => dispatch(getTransactions(dateRange)),
     getAccountDetails: () => dispatch(getAccountDetails()),
-    setTransferAmount: roundUp => dispatch(setTransferAmount(roundUp))
+    initTransfer: payload => dispatch(setTransferAmount(payload))
   })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TransactionsPage);

@@ -27,12 +27,13 @@ export const getGoalsError = payload => dispatch => {
 
 export const createGoal = payload => async dispatch => {
     try {
-        // GoalsApi.createGoal(payload)
-        // .then(response => {
-            // dispatch(createGoalSuccess(response))
+        GoalsApi.createGoal(payload)
+        .then(response => {
+            dispatch(createGoalSuccess(response))
             dispatch(getGoals(payload.accountUid))
-        // })
+        })
     } catch (err) {
+        dispatch(createGoalError(err))
         console.log(err, 'Goal creation failed')
     }
 }
@@ -49,4 +50,11 @@ export const createGoalError = payload => dispatch => {
         type: 'CREATE_GOAL_ERROR',
         payload: payload
      })
+}
+
+export const setTargetGoalName = payload => {
+    return {
+        type: "SET_TARGET_GOAL_NAME",
+        payload: payload
+    }
 }

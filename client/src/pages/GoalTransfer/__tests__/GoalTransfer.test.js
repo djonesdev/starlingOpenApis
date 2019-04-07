@@ -14,10 +14,4 @@ describe('Transaction component', () => {
         expect(wrapper.find('.table-container').exists()).toBe(false)
         expect(wrapper.find('.spider-man').exists()).toBe(false)
     })
-    it('should click the button', () => {
-        const mockClick = jest.fn()
-        const wrapper = shallow(<GoalTransfer onClick={mockClick} />)
-        wrapper.find('.button').simulate('click')
-        expect(mockClick).toHaveBeenCalledTimes(1);
-    })
 })

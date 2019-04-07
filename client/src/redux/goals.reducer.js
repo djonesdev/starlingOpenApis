@@ -1,6 +1,9 @@
 const initialState = {
     goals: [],
+    dirtyTransactions: [],
+    transferTargetGoalName: '',
     transferAmount: 0,
+    loading: false 
 }
 
 export const goalsReducer = (state = initialState, action)  => {
@@ -29,17 +32,30 @@ export const goalsReducer = (state = initialState, action)  => {
         case 'SET_TRANSFER_AMOUNT': 
             return {
                 ...state, 
-                transferAmount: payload
+                transferAmount: payload.amount,
+                dirtyTransactions: payload.dirtyTransactions
+            }
+        case 'SET_TARGET_GOAL_NAME': {
+            return {
+                ...state,
+                transferTargetGoalName: payload
+            }
+        }
+        case 'GOAL_TRANSFER_START':
+            return {
+                loading: true
             }
         case 'GOAL_TRANSFER_SUCCESS':
             return {
                 ...state, 
-                goals: payload
+                goals: payload,
+                loading: false
             }
         case 'GOAL_TRANSFER_ERROR':
             return {
                 ...state, 
-                goals: payload
+                goals: payload,
+                loading: false
             }
         default:
             return state
