@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Button, TransactionItem } from '../../components'
-import './transactions.css'
+import './Transactions.css'
 
 export const Transactions = (props) => {
     const { 
