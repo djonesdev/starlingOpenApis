@@ -17,6 +17,6 @@ describe('Transaction component', () => {
         const mockClick = jest.fn()
         const wrapper = shallow(<CreateGoalView createGoal={mockClick} />)
         wrapper.find('#create-goal').simulate('click')
-        expect(mockClick).toHaveBeenCalledTimes(1);
+        expect(mockClick).toHaveBeenCalledTimes(1)
     })
 })
