@@ -11,7 +11,7 @@ import './styles/TransactionItem.styles.css'
 export const TransactionItem = (props) => {
   
     return (
-      <Table className="transaction-table">
+      <Table id="transaction-table">
         <TableHead align="center">
           <TableRow>
             <TableCell>Narrative</TableCell>

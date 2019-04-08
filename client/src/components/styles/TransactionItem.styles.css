@@ -5,6 +5,11 @@
 .balance-container {
     width: 80%;
     margin: 5px;
-    background-color: red;
     display: flex;
+}
+
+#transaction-table {
+    text-align: center;
+    margin: 0 auto;
+    margin-left: -80px;
 }

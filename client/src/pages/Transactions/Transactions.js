@@ -31,7 +31,7 @@ export const Transactions = (props) => {
                             </Link>
                         </div>
                     </div>
-                    )} 
+                    )}
                 </div>
             </div>
         );
