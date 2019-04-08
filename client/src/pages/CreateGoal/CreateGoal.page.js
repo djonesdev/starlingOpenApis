@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { CreateGoalView } from './CreateGoal'
 import { createGoal, getGoals } from './CreateGoal.redux'
-import { selectAccountUid, selectTransferAmount } from '../../redux/selectors'
+import { selectAccountUid, selectTransferAmount, selectGoals } from '../../redux/selectors'
 
 
 
@@ -11,6 +11,15 @@ class CreateGoal extends Component {
   state = {
       name: '',
       currency: 'GBP',
+  }
+
+  componentDidMount = async () => {
+    const { getGoals, account } = this.props
+    try {
+      await getGoals(account.accountUid)
+    } catch (err){
+      console.log(err)
+    }
   }
 
   createGoal = async () => {
@@ -27,28 +36,22 @@ class CreateGoal extends Component {
     }
   }
 
-  navigateToTransfer = async () => {
-    const { getGoals, account } = this.props
-    try {
-      await getGoals(account.accountUid)
-    } catch (err){
-      console.log(err)
-    }
-  }
-
   onChangeName = e => {
     this.setState({ name: e.target.value })
   }
 
   render() {
-    const { transferAmount } = this.props 
+    const { transferAmount, goals } = this.props 
+    const hasGoals = goals && goals.length > 1
+    const createGoalButtonDisabled = !this.state.name
     return (
       <div>
         <CreateGoalView 
           onChangeName={this.onChangeName} 
           transferAmount={transferAmount} 
-          createGoal={this.createGoal}
-          navigateToTransfer={this.navigateToTransfer}
+          createGoal={this.createGoal}  
+          hasGoals={hasGoals}
+          createGoalButtonDisabled={createGoalButtonDisabled}
         />
       </div>
     )
@@ -58,6 +61,7 @@ class CreateGoal extends Component {
 const mapStateToProps = state => ({
   account: selectAccountUid(state),
   transferAmount: selectTransferAmount(state), 
+  goals: selectGoals(state), 
 })
 
 const mapDispatchToProps = dispatch => ({
