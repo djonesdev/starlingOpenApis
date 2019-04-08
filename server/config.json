@@ -5,10 +5,10 @@
     "cookieSecret": "21e361d0-ff2c-4763-a084-1032f2103ce8",
   
     "baseUrl": "https://api-sandbox.starlingbank.com/",
-    "refreshToken": "s6gcji24ogAwrXBN2KneaUxs0LTybR7f3cbftfzb15WlruRrFBb6mglpRFi7wEVg",
+    "refreshToken": "epkayT5aqkqVJ6k4LuktNERKoKuA5XXlwSjG37EoLcL1Wv8fTXSosMBltZx1Loy2",
   
     "oauthApi": "https://oauth.starlingbank.com",
     "oauthRedirectUri": "http://localhost:3000/api/oauth/redirect",
 
-    "defaultHeaders": { "Authorization": "Bearer v0XT3MlEchwsgX5GWztCkRPFvuGUX3m1FdLaSZfJoPhRJPa818ecvh1Jp1gAcnEh", "Accept": "application/json" }
+    "defaultHeaders": { "Authorization": "Bearer 40MeZhgsZq7dKuzSjvGWVBNsoVXBXUEBiPLx3TGfTqUCyeND7dfBZWmTFAuFUwT3", "Accept": "application/json" }
 }

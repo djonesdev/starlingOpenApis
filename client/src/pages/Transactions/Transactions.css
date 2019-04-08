@@ -24,4 +24,14 @@
 .roundup-display {
     display: inline;
     margin: 5em;
+
+}
+@media screen and (max-width: 768px) {
+    .transactions-container {
+        display: block;
+        width: 100%;
+    }
+    .table-container {
+        margin: auto;
+    }
 }
